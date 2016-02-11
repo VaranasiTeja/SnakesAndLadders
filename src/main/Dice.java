@@ -8,4 +8,5 @@ public class Dice {
 	int rollTheDice(int max) {
 		return r.nextInt(max) + 1;
 	}
+
 }

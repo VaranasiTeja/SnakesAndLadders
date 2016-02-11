@@ -1,8 +1,10 @@
 package main;
 
 public class Game {
+	Ladder ladObj = new Ladder();
 
-	int[][] ladder = { { 6, 13 }, { 21, 43 }, { 27, 61 }, { 54, 87 } };
+	int[][] ladder = ladObj.generateLadder();
+	// = { { 6, 13 }, { 21, 43 }, { 27, 61 }, { 54, 87 } };
 
 	int[][] snake = { { 20, 2 }, { 35, 10 }, { 75, 40 }, { 85, 34 }, { 97, 4 } };
 
@@ -13,7 +15,6 @@ public class Game {
 		Dice dice = new Dice();
 
 		int randomOne, newPosition, randomTwo;
-
 		while (true) {
 			randomOne = dice.rollTheDice(6);
 			newPosition = obj.ifLadder(playerA.getPosition() + randomOne);
@@ -35,9 +36,9 @@ public class Game {
 				System.out.println("Palyer B wins");
 				break;
 			}
-
 		}
-
+		System.out.println("-----------------------");
+		obj.display();
 	}
 
 	int ifLadder(int position) {
@@ -54,5 +55,14 @@ public class Game {
 				return snake[i][1];
 		}
 		return position;
+	}
+
+	void display() {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 2; j++) {
+				System.out.print(ladder[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 }
