@@ -15,13 +15,13 @@ public class Game {
 		int randomOne, newPosition, randomTwo;
 
 		while (true) {
-			randomOne = dice.rollTheDice(1,6);
+			randomOne = dice.rollTheDice(6);
 			newPosition = obj.ifLadder(playerA.getPosition() + randomOne);
 			playerA.setPosition(newPosition > 100 ? playerA.getPosition() : newPosition);
 			playerA.setPosition(obj.ifSnake(playerA.getPosition()));
 			System.out.print(playerA.getPosition() + "----");
 
-			randomTwo = dice.rollTheDice(1, 6);
+			randomTwo = dice.rollTheDice(6);
 			newPosition = obj.ifLadder(playerB.getPosition() + randomTwo);
 			playerB.setPosition(newPosition > 100 ? playerB.getPosition() : newPosition);
 			playerB.setPosition(obj.ifSnake(playerB.getPosition()));
