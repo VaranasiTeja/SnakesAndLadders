@@ -2,8 +2,6 @@ package main;
 
 import java.util.Random;
 
-import players.Player;
-
 public class Game {
 
 	Random r = new Random();
@@ -22,22 +20,22 @@ public class Game {
 		while (true) {
 
 			randomOne = obj.getRandom(1, 6);
-			newPosition = obj.ifLadder(playerA.position + randomOne);
-			playerA.position = newPosition > 100 ? playerA.position : newPosition;
-			playerA.position = obj.ifSnake(playerA.position);
-			System.out.print(playerA.position + "----");
+			newPosition = obj.ifLadder(playerA.getPosition() + randomOne);
+			playerA.setPosition(newPosition > 100 ? playerA.getPosition() : newPosition);
+			playerA.setPosition(obj.ifSnake(playerA.getPosition()));
+			System.out.print(playerA.getPosition() + "----");
 
 			randomTwo = obj.getRandom(1, 6);
-			newPosition = obj.ifLadder(playerB.position + randomTwo);
-			playerB.position = newPosition > 100 ? playerB.position : newPosition;
-			playerB.position = obj.ifSnake(playerB.position);
-			System.out.println(playerB.position);
+			newPosition = obj.ifLadder(playerB.getPosition() + randomTwo);
+			playerB.setPosition(newPosition > 100 ? playerB.getPosition() : newPosition);
+			playerB.setPosition(obj.ifSnake(playerB.getPosition()));
+			System.out.println(playerB.getPosition());
 
-			if (playerA.position == 100) {
+			if (playerA.getPosition() == 100) {
 				System.out.println("Palyer A wins");
 				break;
 			}
-			if (playerB.position == 100) {
+			if (playerB.getPosition() == 100) {
 				System.out.println("Palyer B wins");
 				break;
 			}
