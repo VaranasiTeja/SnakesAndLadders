@@ -1,10 +1,6 @@
 package main;
 
-import java.util.Random;
-
 public class Game {
-
-	Random r = new Random();
 
 	int[][] ladder = { { 6, 13 }, { 21, 43 }, { 27, 61 }, { 54, 87 } };
 
@@ -14,18 +10,18 @@ public class Game {
 		Player playerA = new Player("Player-A");
 		Player playerB = new Player("Player-B");
 		Game obj = new Game();
+		Dice dice = new Dice();
 
 		int randomOne, newPosition, randomTwo;
 
 		while (true) {
-
-			randomOne = obj.getRandom(1, 6);
+			randomOne = dice.rollTheDice(1,6);
 			newPosition = obj.ifLadder(playerA.getPosition() + randomOne);
 			playerA.setPosition(newPosition > 100 ? playerA.getPosition() : newPosition);
 			playerA.setPosition(obj.ifSnake(playerA.getPosition()));
 			System.out.print(playerA.getPosition() + "----");
 
-			randomTwo = obj.getRandom(1, 6);
+			randomTwo = dice.rollTheDice(1, 6);
 			newPosition = obj.ifLadder(playerB.getPosition() + randomTwo);
 			playerB.setPosition(newPosition > 100 ? playerB.getPosition() : newPosition);
 			playerB.setPosition(obj.ifSnake(playerB.getPosition()));
@@ -42,10 +38,6 @@ public class Game {
 
 		}
 
-	}
-
-	int getRandom(int min, int max) {
-		return r.nextInt(max - min) + min;
 	}
 
 	int ifLadder(int position) {
