@@ -1,50 +1,54 @@
 package main;
 
-public class Game {
-	Ladder ladObj = new Ladder();
+import java.util.ArrayList;
 
-	int[][] ladder = ladObj.generateLadder();
-	// = { { 6, 13 }, { 21, 43 }, { 27, 61 }, { 54, 87 } };
+public class Game {
 
 	int[][] snake = { { 20, 2 }, { 35, 10 }, { 75, 40 }, { 85, 34 }, { 97, 4 } };
 
 	public static void main(String args[]) {
 		Player playerA = new Player("Player-A");
 		Player playerB = new Player("Player-B");
-		Game obj = new Game();
-		Dice dice = new Dice();
-
-		int randomOne, newPosition, randomTwo;
+		Game game = new Game();
+		RandomNumber randomNumForDice = new RandomNumber();
+		int diceOutcomebyFirstPerson, newPosition, diceOutcomebySecondPerson;
+		LaddersList ladders = new LaddersList();
+		//ArrayList<Ladder> allLadders = ladders.generateLaddersList(GameProperties.maxNumLadders);
+		ArrayList<Ladder> allLadders=ladders.generateLaddersList(5);
+		ladders.generateLaddersList(2);
 		while (true) {
-			randomOne = dice.rollTheDice(6);
-			newPosition = obj.ifLadder(playerA.getPosition() + randomOne);
-			playerA.setPosition(newPosition > 100 ? playerA.getPosition() : newPosition);
-			playerA.setPosition(obj.ifSnake(playerA.getPosition()));
-			System.out.print(playerA.getPosition() + "----");
+			diceOutcomebyFirstPerson = randomNumForDice.DiceOutcome(GameProperties.diceOutComeRange);
+			newPosition = game.ifLadder((playerA.getPosition() + diceOutcomebyFirstPerson), allLadders);
+			playerA.setPosition(
+					newPosition > GameProperties.maxNumPositionsInBoard ? playerA.getPosition() : newPosition);
+			playerA.setPosition(game.ifSnake(playerA.getPosition()));
+			System.out.print(playerA.getPosition() + "--");
 
-			randomTwo = dice.rollTheDice(6);
-			newPosition = obj.ifLadder(playerB.getPosition() + randomTwo);
-			playerB.setPosition(newPosition > 100 ? playerB.getPosition() : newPosition);
-			playerB.setPosition(obj.ifSnake(playerB.getPosition()));
+			diceOutcomebySecondPerson = randomNumForDice.DiceOutcome(GameProperties.diceOutComeRange);
+			newPosition = game.ifLadder((playerB.getPosition() + diceOutcomebySecondPerson), allLadders);
+			playerB.setPosition(
+					newPosition > GameProperties.maxNumPositionsInBoard ? playerB.getPosition() : newPosition);
+			playerB.setPosition(game.ifSnake(playerB.getPosition()));
 			System.out.println(playerB.getPosition());
 
-			if (playerA.getPosition() == 100) {
+			if (playerA.getPosition() == GameProperties.maxNumPositionsInBoard) {
 				System.out.println("Palyer A wins");
 				break;
 			}
-			if (playerB.getPosition() == 100) {
+			if (playerB.getPosition() == GameProperties.maxNumPositionsInBoard) {
 				System.out.println("Palyer B wins");
 				break;
 			}
 		}
 		System.out.println("-----------------------");
-		obj.display();
+		System.out.println("Ladders:-------->");
+		game.display(allLadders);
 	}
 
-	int ifLadder(int position) {
-		for (int i = 0; i < 4; i++) {
-			if (ladder[i][0] == position)
-				return ladder[i][1];
+	int ifLadder(int position, ArrayList<Ladder> laddersList) {
+		for (Ladder ladder : laddersList) {
+			if (ladder.getBasePosition() == position)
+				return ladder.getTopPosition();
 		}
 		return position;
 	}
@@ -57,12 +61,10 @@ public class Game {
 		return position;
 	}
 
-	void display() {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 2; j++) {
-				System.out.print(ladder[i][j] + " ");
-			}
-			System.out.println();
+	void display(ArrayList<Ladder> laddersList) {
+		for (Ladder ladder : laddersList) {
+			System.out.println(ladder.getBasePosition() + "  " + ladder.getTopPosition());
 		}
 	}
+
 }
