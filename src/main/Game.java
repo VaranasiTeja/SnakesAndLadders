@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class Game {
 
-	int[][] snake = { { 20, 2 }, { 35, 10 }, { 75, 40 }, { 85, 34 }, { 97, 4 } };
-
 	public static void main(String args[]) {
 		Player playerA = new Player("Player-A");
 		Player playerB = new Player("Player-B");
@@ -15,21 +13,26 @@ public class Game {
 		LadderList ladders = new LadderList();
 		ArrayList<Ladder> allLadders = ladders.generateLadderList(GameProperties.maxNumLadders);
 		System.out.println("Ladders:");
-		game.display(allLadders);
+		game.displayLadders(allLadders);
+		SnakeList snakes = new SnakeList();
+		snakes.setLadderList(allLadders);
+		ArrayList<Snake> allSnakes = snakes.generateSnakeList(GameProperties.maxNumSnakes);
+		System.out.println("Snakes:");
+		game.displaySnakes(allSnakes);
 		System.out.println("---Game Begin ---");
 		while (true) {
 			diceOutcomebyFirstPerson = randomNumForDice.DiceOutcome(GameProperties.diceOutComeRange);
 			newPosition = game.ifLadder((playerA.getPosition() + diceOutcomebyFirstPerson), allLadders);
 			playerA.setPosition(
 					newPosition > GameProperties.maxNumPositionsInBoard ? playerA.getPosition() : newPosition);
-			playerA.setPosition(game.ifSnake(playerA.getPosition()));
+			playerA.setPosition(game.ifSnake(playerA.getPosition(), allSnakes));
 			System.out.print(playerA.getPosition() + "--");
 
 			diceOutcomebySecondPerson = randomNumForDice.DiceOutcome(GameProperties.diceOutComeRange);
 			newPosition = game.ifLadder((playerB.getPosition() + diceOutcomebySecondPerson), allLadders);
 			playerB.setPosition(
 					newPosition > GameProperties.maxNumPositionsInBoard ? playerB.getPosition() : newPosition);
-			playerB.setPosition(game.ifSnake(playerB.getPosition()));
+			playerB.setPosition(game.ifSnake(playerB.getPosition(), allSnakes));
 			System.out.println(playerB.getPosition());
 
 			if (playerA.getPosition() == GameProperties.maxNumPositionsInBoard) {
@@ -51,17 +54,24 @@ public class Game {
 		return position;
 	}
 
-	int ifSnake(int position) {
-		for (int i = 0; i < 5; i++) {
-			if (snake[i][0] == position)
-				return snake[i][1];
+	int ifSnake(int position, ArrayList<Snake> snakeList) {
+		for (Snake snake : snakeList) {
+			if (snake.getTopPosition() == position)
+				return snake.getBasePosition();
 		}
 		return position;
 	}
 
-	void display(ArrayList<Ladder> laddersList) {
+	void displayLadders(ArrayList<Ladder> laddersList) {
 		for (Ladder ladder : laddersList) {
 			System.out.println(ladder.getBasePosition() + "  " + ladder.getTopPosition());
+		}
+
+	}
+
+	void displaySnakes(ArrayList<Snake> sankeList) {
+		for (Snake snake : sankeList) {
+			System.out.println(snake.getBasePosition() + "  " + snake.getTopPosition());
 		}
 
 	}

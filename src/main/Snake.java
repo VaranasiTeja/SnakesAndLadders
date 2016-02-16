@@ -1,11 +1,23 @@
 package main;
 
 public class Snake {
-	int basePosition, topPosition;
+	private int basePosition;
+	private int topPosition;
 
-	public Snake(int basePosition, int topPosition) {
-		this.basePosition = basePosition;
-		this.topPosition = topPosition;
+	void setBasePosition(int position) {
+		this.basePosition = position;
+	}
+
+	void setTopPosition(int position) {
+		this.topPosition = position;
+	}
+
+	int getBasePosition() {
+		return this.basePosition;
+	}
+
+	int getTopPosition() {
+		return this.topPosition;
 	}
 
 }
