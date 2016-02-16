@@ -12,10 +12,11 @@ public class Game {
 		Game game = new Game();
 		RandomNumber randomNumForDice = new RandomNumber();
 		int diceOutcomebyFirstPerson, newPosition, diceOutcomebySecondPerson;
-		LaddersList ladders = new LaddersList();
-		//ArrayList<Ladder> allLadders = ladders.generateLaddersList(GameProperties.maxNumLadders);
-		ArrayList<Ladder> allLadders=ladders.generateLaddersList(5);
-		ladders.generateLaddersList(2);
+		LadderList ladders = new LadderList();
+		ArrayList<Ladder> allLadders = ladders.generateLadderList(GameProperties.maxNumLadders);
+		System.out.println("Ladders:");
+		game.display(allLadders);
+		System.out.println("---Game Begin ---");
 		while (true) {
 			diceOutcomebyFirstPerson = randomNumForDice.DiceOutcome(GameProperties.diceOutComeRange);
 			newPosition = game.ifLadder((playerA.getPosition() + diceOutcomebyFirstPerson), allLadders);
@@ -40,9 +41,6 @@ public class Game {
 				break;
 			}
 		}
-		System.out.println("-----------------------");
-		System.out.println("Ladders:-------->");
-		game.display(allLadders);
 	}
 
 	int ifLadder(int position, ArrayList<Ladder> laddersList) {
@@ -65,6 +63,7 @@ public class Game {
 		for (Ladder ladder : laddersList) {
 			System.out.println(ladder.getBasePosition() + "  " + ladder.getTopPosition());
 		}
+
 	}
 
 }
