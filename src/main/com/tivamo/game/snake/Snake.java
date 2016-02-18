@@ -1,20 +1,20 @@
 package com.tivamo.game.snake;
 
 public class Snake {
-	private int basePosition;
-	private int topPosition;
+	private int tail;
+	private int head;
 
-	public Snake(int basePosition, int topPosition) {
-		this.basePosition = basePosition;
-		this.topPosition = topPosition;
+	public Snake(int tail, int head) {
+		this.tail = tail;
+		this.head = head;
 	}
 
-	public int getBasePosition() {
-		return this.basePosition;
+	public int getTail() {
+		return this.tail;
 	}
 
-	public int getTopPosition() {
-		return this.topPosition;
+	public int getHead() {
+		return this.head;
 	}
 
 }

@@ -2,16 +2,16 @@ package com.tivamo.game.ladder;
 
 public class Ladder {
 
-	private int basePosition;
+	private int bottomPosition;
 	private int topPosition;
 
 	public Ladder(int basePosition, int topPosition) {
-		this.basePosition = basePosition;
+		this.bottomPosition = basePosition;
 		this.topPosition = topPosition;
 	}
 
-	public int getBasePosition() {
-		return this.basePosition;
+	public int getBottomPosition() {
+		return this.bottomPosition;
 	}
 
 	public int getTopPosition() {

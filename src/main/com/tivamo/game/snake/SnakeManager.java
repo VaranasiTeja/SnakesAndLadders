@@ -5,25 +5,23 @@ import java.util.List;
 
 import com.tivamo.game.properties.GameProperties;
 import com.tivamo.game.util.RandomNumber;
+import com.tivamo.game.util.SnakeUtilities;
 
 public class SnakeManager {
-	private RandomNumber randomNumForLadderPositions = new RandomNumber();
+	private RandomNumber randomNumber = new RandomNumber();
 
-	ValidateSnake snakeValidator = new ValidateSnake();
+	SnakeUtilities snakeUtilities = new SnakeUtilities();
 
 	public List<Snake> generateSnakeList(int maxNumSnakes) {
 		List<Snake> snakeList = new ArrayList<Snake>();
-		while (true) {
-			Snake newSnake = new Snake(
-					randomNumForLadderPositions
-							.randomNumberForLadderPosition(GameProperties.MAX_NUM_POSITIONS_IN_BOARD - 1),
-					randomNumForLadderPositions
-							.randomNumberForLadderPosition(GameProperties.MAX_NUM_POSITIONS_IN_BOARD - 1));
-			if (snakeValidator.validateSnake(newSnake, snakeList) == true) {
+		int head, tail;
+		while (snakeList.size() < maxNumSnakes) {
+			head = randomNumber.getRandomNumberInRange(GameProperties.MAX_NUM_POSITIONS_IN_BOARD - 1, 12);
+			tail = randomNumber.getRandomNumberInRange(head - 10, 2);
+			Snake newSnake = new Snake(tail, head);
+			if (snakeUtilities.validateSnake(newSnake, snakeList)) {
 				snakeList.add(newSnake);
 			}
-			if (snakeList.size() == maxNumSnakes)
-				break;
 		}
 		return snakeList;
 	}
