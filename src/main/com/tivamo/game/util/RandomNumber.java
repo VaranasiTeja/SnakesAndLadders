@@ -1,4 +1,4 @@
-package main;
+package com.tivamo.game.util;
 
 import java.util.Random;
 

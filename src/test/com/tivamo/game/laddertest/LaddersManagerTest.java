@@ -1,16 +1,19 @@
-package main;
+package com.tivamo.game.laddertest;
 
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class LaddersListTest {
-	LadderList ladders = new LadderList();
+import com.tivamo.game.ladder.Ladder;
+import com.tivamo.game.ladder.LadderManager;
+
+public class LaddersManagerTest {
+	LadderManager ladders = new LadderManager();
 
 	@Test
 	public void testLaddersList() {
-		LadderList laddersObject = new LadderList();
+		LadderManager laddersObject = new LadderManager();
 		List<Ladder> ladders = laddersObject.generateLadderList(4);
 		Assert.assertEquals(4, ladders.size());
 		List<Ladder> newLadders = laddersObject.generateLadderList(6);
@@ -20,7 +23,7 @@ public class LaddersListTest {
 
 	@Test
 	public void testShouldNotHang() {
-		LadderList laddersObject = new LadderList();
+		LadderManager laddersObject = new LadderManager();
 		List<Ladder> ladders = laddersObject.generateLadderList(4);
 		Assert.assertEquals(4, ladders.size());
 		List<Ladder> newLadders = laddersObject.generateLadderList(1);
