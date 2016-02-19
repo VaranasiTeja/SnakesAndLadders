@@ -26,43 +26,37 @@ public class Game {
 		LadderManager ladderManager = new LadderManager();
 		SnakeManager snakeManager = new SnakeManager();
 		BoardManager boardManager = new BoardManager();
-		while (true) {
-			ladderList = ladderManager.generateLadderList(GameProperties.MAX_NUM_LADDERS);
-			snakeList = snakeManager.generateSnakeList(GameProperties.MAX_NUM_SNAKES);
-			if (boardManager.validateBoard(ladderList, snakeList))
-				break;
-			else
-				continue;
-		}
+		do {
+			ladderList = ladderManager.generateLadderList(GameProperties.MAX_LADDERS);
+			snakeList = snakeManager.generateSnakeList(GameProperties.MAX_SNAKES);
+		} while (!boardManager.validateBoard(ladderList, snakeList));
 		System.out.println("Ladders:");
 		DisplayBoard display = new DisplayBoard();
 		display.displayLadders(ladderList);
 		System.out.println("Snakes:");
 		display.displaySnakes(snakeList);
 		System.out.println("---Game Begin ---");
-		LadderUtilities ladderUtilities = new LadderUtilities();
-		SnakeUtilities snakeUtilities = new SnakeUtilities();
 		while (true) {
 			diceOutcomebyFirstPerson = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
-			playerUpdatedPosition = ladderUtilities
+			playerUpdatedPosition = LadderUtilities
 					.getLadderTopPosition((playerA.getPosition() + diceOutcomebyFirstPerson), ladderList);
-			playerA.setPosition(playerUpdatedPosition > GameProperties.MAX_NUM_POSITIONS_IN_BOARD
-					? playerA.getPosition() : playerUpdatedPosition);
-			playerA.setPosition(snakeUtilities.getSnakeTail(playerA.getPosition(), snakeList));
+			playerA.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? playerA.getPosition()
+					: playerUpdatedPosition);
+			playerA.setPosition(SnakeUtilities.getSnakeTail(playerA.getPosition(), snakeList));
 			System.out.print(playerA.getPosition() + "--");
 			diceOutcomebySecondPerson = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
-			playerUpdatedPosition = ladderUtilities
+			playerUpdatedPosition = LadderUtilities
 					.getLadderTopPosition((playerB.getPosition() + diceOutcomebySecondPerson), ladderList);
-			playerB.setPosition(playerUpdatedPosition > GameProperties.MAX_NUM_POSITIONS_IN_BOARD
-					? playerB.getPosition() : playerUpdatedPosition);
-			playerB.setPosition(snakeUtilities.getSnakeTail(playerB.getPosition(), snakeList));
+			playerB.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? playerB.getPosition()
+					: playerUpdatedPosition);
+			playerB.setPosition(SnakeUtilities.getSnakeTail(playerB.getPosition(), snakeList));
 			System.out.println(playerB.getPosition());
 
-			if (playerA.getPosition() == GameProperties.MAX_NUM_POSITIONS_IN_BOARD) {
+			if (playerA.getPosition() == GameProperties.MAX_POSITIONS_IN_BOARD) {
 				System.out.println("Palyer A wins");
 				break;
 			}
-			if (playerB.getPosition() == GameProperties.MAX_NUM_POSITIONS_IN_BOARD) {
+			if (playerB.getPosition() == GameProperties.MAX_POSITIONS_IN_BOARD) {
 				System.out.println("Palyer B wins");
 				break;
 			}

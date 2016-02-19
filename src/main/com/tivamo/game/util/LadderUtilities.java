@@ -6,15 +6,15 @@ import com.tivamo.game.ladder.Ladder;
 
 public class LadderUtilities {
 
-	public int getLadderTopPosition(int position, List<Ladder> ladderList) {
+	public static int getLadderTopPosition(int bottomPosition, List<Ladder> ladderList) {
 		for (Ladder ladder : ladderList) {
-			if (ladder.getBottomPosition() == position)
+			if (ladder.getBottomPosition() == bottomPosition)
 				return ladder.getTopPosition();
 		}
-		return position;
+		return bottomPosition;
 	}
 
-	public boolean validateLadder(Ladder newLadder, List<Ladder> ladderList) {
+	public static boolean validateLadder(Ladder newLadder, List<Ladder> ladderList) {
 		for (Ladder ladder : ladderList) {
 			if (ladder.getBottomPosition() == newLadder.getBottomPosition()
 					|| ladder.getTopPosition() == newLadder.getBottomPosition()

@@ -15,7 +15,7 @@ public class DisplayBoard {
 
 	public void displaySnakes(List<Snake> sankeList) {
 		for (Snake snake : sankeList) {
-			System.out.println(snake.getTail() + "  " + snake.getHead());
+			System.out.println(snake.getTailPos() + "  " + snake.getHeadPos());
 		}
 	}
 

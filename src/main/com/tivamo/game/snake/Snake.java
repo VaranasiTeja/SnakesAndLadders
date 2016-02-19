@@ -2,20 +2,20 @@ package com.tivamo.game.snake;
 
 public class Snake {
 
-	private int tail;
-	private int head;
+	private int headPos;
+	private int tailPos;
 
-	public Snake(int tail, int head) {
-		this.tail = tail;
-		this.head = head;
+	public Snake(int headPos, int tailPos) {
+		this.headPos = headPos;
+		this.tailPos = tailPos;
 	}
 
-	public int getTail() {
-		return this.tail;
+	public int getHeadPos() {
+		return this.headPos;
 	}
 
-	public int getHead() {
-		return this.head;
+	public int getTailPos() {
+		return this.tailPos;
 	}
 
 }

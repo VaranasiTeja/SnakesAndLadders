@@ -6,18 +6,18 @@ import com.tivamo.game.snake.Snake;
 
 public class SnakeUtilities {
 
-	public int getSnakeTail(int position, List<Snake> snakeList) {
+	public static int getSnakeTail(int headPosition, List<Snake> snakeList) {
 		for (Snake snake : snakeList) {
-			if (snake.getHead() == position)
-				return snake.getTail();
+			if (snake.getHeadPos() == headPosition)
+				return snake.getTailPos();
 		}
-		return position;
+		return headPosition;
 	}
 
-	public boolean validateSnake(Snake newSnake, List<Snake> snakeList) {
+	public static boolean validateSnake(Snake newSnake, List<Snake> snakeList) {
 		for (Snake snake : snakeList) {
-			if (snake.getTail() == newSnake.getTail() || snake.getHead() == newSnake.getTail()
-					|| snake.getHead() == newSnake.getHead() || snake.getTail() == newSnake.getHead())
+			if (snake.getTailPos() == newSnake.getTailPos() || snake.getHeadPos() == newSnake.getTailPos()
+					|| snake.getHeadPos() == newSnake.getHeadPos() || snake.getTailPos() == newSnake.getHeadPos())
 				return false;
 		}
 		return true;

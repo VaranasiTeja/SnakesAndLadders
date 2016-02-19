@@ -10,8 +10,9 @@ public class BoardManager {
 	public boolean validateBoard(List<Ladder> ladderList, List<Snake> snakeList) {
 		for (Ladder ladder : ladderList) {
 			for (Snake snake : snakeList) {
-				if (ladder.getTopPosition() == snake.getHead() || ladder.getBottomPosition() == snake.getHead()
-						|| ladder.getTopPosition() == snake.getTail() || ladder.getBottomPosition() == snake.getTail())
+				if (ladder.getTopPosition() == snake.getHeadPos() || ladder.getBottomPosition() == snake.getHeadPos()
+						|| ladder.getTopPosition() == snake.getTailPos()
+						|| ladder.getBottomPosition() == snake.getTailPos())
 					return false;
 			}
 		}

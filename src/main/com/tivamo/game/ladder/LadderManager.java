@@ -11,16 +11,14 @@ public class LadderManager {
 
 	private RandomNumber randomNumber = new RandomNumber();
 
-	LadderUtilities ladderUtilities = new LadderUtilities();
-
-	public List<Ladder> generateLadderList(int maxNumLadders) {
+	public List<Ladder> generateLadderList(int maxLadders) {
 		List<Ladder> ladderList = new ArrayList<Ladder>();
 		int topPosition, bottomPosition;
-		while (ladderList.size() < maxNumLadders) {
-			topPosition = randomNumber.getRandomNumberInRange(GameProperties.MAX_NUM_POSITIONS_IN_BOARD - 1, 12);
+		while (ladderList.size() < maxLadders) {
+			topPosition = randomNumber.getRandomNumberInRange(GameProperties.MAX_POSITIONS_IN_BOARD - 1, 12);
 			bottomPosition = randomNumber.getRandomNumberInRange(topPosition - 10, 2);
-			Ladder newLadder = new Ladder(bottomPosition, topPosition);
-			if (ladderUtilities.validateLadder(newLadder, ladderList)) {
+			Ladder newLadder = new Ladder(topPosition, bottomPosition);
+			if (LadderUtilities.validateLadder(newLadder, ladderList)) {
 				ladderList.add(newLadder);
 			}
 		}
