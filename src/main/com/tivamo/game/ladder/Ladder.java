@@ -5,8 +5,8 @@ public class Ladder {
 	private int bottomPosition;
 	private int topPosition;
 
-	public Ladder(int basePosition, int topPosition) {
-		this.bottomPosition = basePosition;
+	public Ladder(int bottomPosition, int topPosition) {
+		this.bottomPosition = bottomPosition;
 		this.topPosition = topPosition;
 	}
 

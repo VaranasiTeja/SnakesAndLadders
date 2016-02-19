@@ -1,6 +1,7 @@
 package com.tivamo.game.snake;
 
 public class Snake {
+
 	private int tail;
 	private int head;
 
