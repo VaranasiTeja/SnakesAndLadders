@@ -1,5 +1,6 @@
 package com.tivamo.game;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.tivamo.game.board.BoardManager;
@@ -16,7 +17,8 @@ import com.tivamo.game.player.Player;
 
 public class Game {
 
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
+		GameProperties.readProperties();
 		Player playerA = new Player();
 		Player playerB = new Player();
 		RandomNumber randomNumber = new RandomNumber();
