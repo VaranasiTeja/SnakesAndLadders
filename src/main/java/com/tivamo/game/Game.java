@@ -5,11 +5,8 @@ import java.util.List;
 
 import com.tivamo.game.board.BoardManager;
 import com.tivamo.game.ladder.Ladder;
-import com.tivamo.game.ladder.LadderManager;
 import com.tivamo.game.properties.GameProperties;
 import com.tivamo.game.snake.Snake;
-import com.tivamo.game.snake.SnakeManager;
-import com.tivamo.game.util.DisplayBoard;
 import com.tivamo.game.util.LadderUtilities;
 import com.tivamo.game.util.RandomNumber;
 import com.tivamo.game.util.SnakeUtilities;
@@ -25,19 +22,16 @@ public class Game {
 		int diceOutcomebyFirstPerson, playerUpdatedPosition, diceOutcomebySecondPerson;
 		List<Ladder> ladderList;
 		List<Snake> snakeList;
-		LadderManager ladderManager = new LadderManager();
-		SnakeManager snakeManager = new SnakeManager();
 		BoardManager boardManager = new BoardManager();
-		do {
-			ladderList = ladderManager.generateLadderList(GameProperties.MAX_LADDERS);
-			snakeList = snakeManager.generateSnakeList(GameProperties.MAX_SNAKES);
-		} while (!boardManager.validateBoard(ladderList, snakeList));
-		System.out.println("Ladders:");
-		DisplayBoard display = new DisplayBoard();
-		display.displayLadders(ladderList);
-		System.out.println("Snakes:");
-		display.displaySnakes(snakeList);
-		System.out.println("---Game Begin ---");
+		boardManager.generateBoardOnValidity();
+		ladderList = boardManager.getLadderList();
+		snakeList = boardManager.getSnakeList();
+		Player[] players = new Player[2];
+
+		for (int i = 0; i < players.length; i++) {
+			players[i] = new Player();
+		}
+
 		while (true) {
 			diceOutcomebyFirstPerson = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
 			playerUpdatedPosition = LadderUtilities
