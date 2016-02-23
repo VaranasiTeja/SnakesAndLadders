@@ -9,16 +9,13 @@ import com.tivamo.game.util.RandomNumber;
 
 public class LadderManager {
 
-	private RandomNumber randomNumber = new RandomNumber();
-
 	public List<Ladder> generateLadderList(int maxLadders) {
 		List<Ladder> ladderList = new ArrayList<Ladder>();
-		int topPosition, bottomPosition;
 		while (ladderList.size() < maxLadders) {
-			topPosition = randomNumber.getRandomNumberInRange(GameProperties.MAX_POSITIONS_IN_BOARD - 1, 12);
-			bottomPosition = randomNumber.getRandomNumberInRange(topPosition - 10, 2);
+			int topPosition = RandomNumber.getRandomNumberInRange(GameProperties.MAX_POSITIONS_IN_BOARD - 1, 12);
+			int bottomPosition = RandomNumber.getRandomNumberInRange(topPosition - 10, 2);
 			Ladder newLadder = new Ladder(topPosition, bottomPosition);
-			if (LadderUtilities.validateLadder(newLadder, ladderList)) {
+			if (LadderUtilities.isValidLadder(newLadder, ladderList)) {
 				ladderList.add(newLadder);
 			}
 		}

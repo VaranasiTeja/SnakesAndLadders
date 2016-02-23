@@ -1,6 +1,8 @@
 package com.tivamo.game;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +19,23 @@ public class Game {
 
 	public static void main(String args[]) throws IOException {
 		GameProperties.read();
-		RandomNumber randomNumber = new RandomNumber();
-		Board board = new Board();
-		board.generateValidBoard();
-		int diceOutcome, playerUpdatedPosition;
-		List<Ladder> ladderList = board.getLadderList();
-		List<Snake> snakeList = board.getSnakeList();
 		List<Player> players = new ArrayList<Player>();
 		for (int player = 1; player <= GameProperties.MAX_PLAYERS; player++) {
 			players.add(new Player());
 		}
+		Board board = new Board();
+		Game.createLevel(board);
+		Game.playGame(players, board);
+	}
+
+	private static void playGame(List<Player> players, Board board) {
+		List<Ladder> ladderList = board.getLadderList();
+		List<Snake> snakeList = board.getSnakeList();
+		int diceOutcome, playerUpdatedPosition;
 		boolean hasGameEnded = false;
 		do {
 			for (Player player : players) {
-				diceOutcome = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
+				diceOutcome = RandomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
 				playerUpdatedPosition = LadderUtilities.getLadderTopPosition((player.getPosition() + diceOutcome),
 						ladderList);
 				player.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? player.getPosition()
@@ -45,4 +50,22 @@ public class Game {
 		} while (!hasGameEnded);
 	}
 
+	private static void createLevel(Board board) throws IOException {
+		System.out.println("Enter Level Of the Game 1.easy 2.Hard :");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		boolean isValidBoard = false;
+		while (!isValidBoard) {
+			int level = Integer.parseInt(br.readLine());
+			if (level == 1) {
+				board.generateValidBoard(GameProperties.MAX_LADDERS + 3, 0);
+				isValidBoard = true;
+			} else if (level == 2) {
+				board.generateValidBoard(0, GameProperties.MAX_SNAKES + 3);
+				isValidBoard = true;
+			} else {
+				System.out.println("Enter Valid Level");
+				continue;
+			}
+		}
+	}
 }

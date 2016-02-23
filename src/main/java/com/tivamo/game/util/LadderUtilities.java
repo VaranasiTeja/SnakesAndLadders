@@ -14,7 +14,7 @@ public class LadderUtilities {
 		return bottomPosition;
 	}
 
-	public static boolean validateLadder(Ladder newLadder, List<Ladder> ladderList) {
+	public static boolean isValidLadder(Ladder newLadder, List<Ladder> ladderList) {
 		for (Ladder ladder : ladderList) {
 			if (ladder.getBottomPosition() == newLadder.getBottomPosition()
 					|| ladder.getTopPosition() == newLadder.getBottomPosition()

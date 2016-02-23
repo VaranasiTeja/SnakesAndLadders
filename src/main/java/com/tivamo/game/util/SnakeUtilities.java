@@ -14,7 +14,7 @@ public class SnakeUtilities {
 		return headPosition;
 	}
 
-	public static boolean validateSnake(Snake newSnake, List<Snake> snakeList) {
+	public static boolean isValidSnake(Snake newSnake, List<Snake> snakeList) {
 		for (Snake snake : snakeList) {
 			if (snake.getTailPos() == newSnake.getTailPos() || snake.getHeadPos() == newSnake.getTailPos()
 					|| snake.getHeadPos() == newSnake.getHeadPos() || snake.getTailPos() == newSnake.getHeadPos())
