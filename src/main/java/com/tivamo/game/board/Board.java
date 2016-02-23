@@ -8,12 +8,12 @@ import com.tivamo.game.properties.GameProperties;
 import com.tivamo.game.snake.Snake;
 import com.tivamo.game.snake.SnakeManager;
 
-public class BoardManager {
+public class Board {
 
 	private List<Ladder> ladderList;
 	private List<Snake> snakeList;
 
-	public void generateBoardOnValidity() {
+	public void generateValidBoard() {
 		LadderManager ladderManager = new LadderManager();
 		SnakeManager snakeManager = new SnakeManager();
 		do {

@@ -1,9 +1,10 @@
 package com.tivamo.game;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.tivamo.game.board.BoardManager;
+import com.tivamo.game.board.Board;
 import com.tivamo.game.ladder.Ladder;
 import com.tivamo.game.properties.GameProperties;
 import com.tivamo.game.snake.Snake;
@@ -15,48 +16,33 @@ import com.tivamo.game.player.Player;
 public class Game {
 
 	public static void main(String args[]) throws IOException {
-		GameProperties.readProperties();
-		Player playerA = new Player();
-		Player playerB = new Player();
+		GameProperties.read();
 		RandomNumber randomNumber = new RandomNumber();
-		int diceOutcomebyFirstPerson, playerUpdatedPosition, diceOutcomebySecondPerson;
-		List<Ladder> ladderList;
-		List<Snake> snakeList;
-		BoardManager boardManager = new BoardManager();
-		boardManager.generateBoardOnValidity();
-		ladderList = boardManager.getLadderList();
-		snakeList = boardManager.getSnakeList();
-		Player[] players = new Player[2];
-
-		for (int i = 0; i < players.length; i++) {
-			players[i] = new Player();
+		Board board = new Board();
+		board.generateValidBoard();
+		int diceOutcome, playerUpdatedPosition;
+		List<Ladder> ladderList = board.getLadderList();
+		List<Snake> snakeList = board.getSnakeList();
+		List<Player> players = new ArrayList<Player>();
+		for (int player = 1; player <= GameProperties.MAX_PLAYERS; player++) {
+			players.add(new Player());
 		}
-
-		while (true) {
-			diceOutcomebyFirstPerson = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
-			playerUpdatedPosition = LadderUtilities
-					.getLadderTopPosition((playerA.getPosition() + diceOutcomebyFirstPerson), ladderList);
-			playerA.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? playerA.getPosition()
-					: playerUpdatedPosition);
-			playerA.setPosition(SnakeUtilities.getSnakeTail(playerA.getPosition(), snakeList));
-			System.out.print(playerA.getPosition() + "--");
-			diceOutcomebySecondPerson = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
-			playerUpdatedPosition = LadderUtilities
-					.getLadderTopPosition((playerB.getPosition() + diceOutcomebySecondPerson), ladderList);
-			playerB.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? playerB.getPosition()
-					: playerUpdatedPosition);
-			playerB.setPosition(SnakeUtilities.getSnakeTail(playerB.getPosition(), snakeList));
-			System.out.println(playerB.getPosition());
-
-			if (playerA.getPosition() == GameProperties.MAX_POSITIONS_IN_BOARD) {
-				System.out.println("Palyer A wins");
-				break;
+		boolean hasGameEnded = false;
+		do {
+			for (Player player : players) {
+				diceOutcome = randomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
+				playerUpdatedPosition = LadderUtilities.getLadderTopPosition((player.getPosition() + diceOutcome),
+						ladderList);
+				player.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? player.getPosition()
+						: playerUpdatedPosition);
+				player.setPosition(SnakeUtilities.getSnakeTail(player.getPosition(), snakeList));
+				if (player.getPosition() == GameProperties.MAX_POSITIONS_IN_BOARD) {
+					System.out.println(player.hashCode() + " wins");
+					hasGameEnded = true;
+					break;
+				}
 			}
-			if (playerB.getPosition() == GameProperties.MAX_POSITIONS_IN_BOARD) {
-				System.out.println("Palyer B wins");
-				break;
-			}
-		}
+		} while (!hasGameEnded);
 	}
 
 }
