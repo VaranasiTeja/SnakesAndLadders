@@ -18,6 +18,7 @@ import com.tivamo.game.player.Player;
 public class Game {
 
 	public static void main(String args[]) throws IOException {
+		Level.levels();
 		GameProperties.read();
 		List<Player> players = new ArrayList<Player>();
 		for (int player = 1; player <= GameProperties.MAX_PLAYERS; player++) {
