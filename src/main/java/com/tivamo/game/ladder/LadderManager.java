@@ -12,7 +12,7 @@ public class LadderManager {
 	public List<Ladder> generateLadderList(int maxLadders) {
 		List<Ladder> ladderList = new ArrayList<Ladder>();
 		while (ladderList.size() < maxLadders) {
-			int topPosition = RandomNumber.getRandomNumberInRange(GameProperties.MAX_POSITIONS_IN_BOARD - 1, 12);
+			int topPosition = RandomNumber.getRandomNumberInRange(GameProperties.NUM_POSITIONS_IN_BOARD - 1, 12);
 			int bottomPosition = RandomNumber.getRandomNumberInRange(topPosition - 10, 2);
 			Ladder newLadder = new Ladder(topPosition, bottomPosition);
 			if (LadderUtilities.isValidLadder(newLadder, ladderList)) {

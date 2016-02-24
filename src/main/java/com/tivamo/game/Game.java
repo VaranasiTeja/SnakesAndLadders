@@ -18,14 +18,13 @@ import com.tivamo.game.player.Player;
 public class Game {
 
 	public static void main(String args[]) throws IOException {
-		Level.levels();
 		GameProperties.read();
 		List<Player> players = new ArrayList<Player>();
-		for (int player = 1; player <= GameProperties.MAX_PLAYERS; player++) {
+		for (int player = 1; player <= GameProperties.NUM_PLAYERS; player++) {
 			players.add(new Player());
 		}
 		Board board = new Board();
-		Game.createLevel(board);
+		Game.createBoardByLevel(board);
 		Game.playGame(players, board);
 	}
 
@@ -39,10 +38,10 @@ public class Game {
 				diceOutcome = RandomNumber.diceOutcome(GameProperties.DICE_OUTCOME_RANGE);
 				playerUpdatedPosition = LadderUtilities.getLadderTopPosition((player.getPosition() + diceOutcome),
 						ladderList);
-				player.setPosition(playerUpdatedPosition > GameProperties.MAX_POSITIONS_IN_BOARD ? player.getPosition()
+				player.setPosition(playerUpdatedPosition > GameProperties.NUM_POSITIONS_IN_BOARD ? player.getPosition()
 						: playerUpdatedPosition);
 				player.setPosition(SnakeUtilities.getSnakeTail(player.getPosition(), snakeList));
-				if (player.getPosition() == GameProperties.MAX_POSITIONS_IN_BOARD) {
+				if (player.getPosition() == GameProperties.NUM_POSITIONS_IN_BOARD) {
 					System.out.println(player.hashCode() + " wins");
 					hasGameEnded = true;
 					break;
@@ -51,22 +50,12 @@ public class Game {
 		} while (!hasGameEnded);
 	}
 
-	private static void createLevel(Board board) throws IOException {
-		System.out.println("Enter Level Of the Game 1.easy 2.Hard :");
+	private static void createBoardByLevel(Board board) throws IOException {
+		System.out.println("Enter Level Of the Game easy/hard :");
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		boolean isValidBoard = false;
-		while (!isValidBoard) {
-			int level = Integer.parseInt(br.readLine());
-			if (level == 1) {
-				board.generateValidBoard(GameProperties.MAX_LADDERS + 3, 0);
-				isValidBoard = true;
-			} else if (level == 2) {
-				board.generateValidBoard(0, GameProperties.MAX_SNAKES + 3);
-				isValidBoard = true;
-			} else {
-				System.out.println("Enter Valid Level");
-				continue;
-			}
-		}
+		String level = br.readLine();
+		Level levelObj = new Level();
+		levelObj.createLaddersAndSnakesOnLevel(level);
+		board.generateValidBoard(Level.ladders, Level.snakes);
 	}
 }

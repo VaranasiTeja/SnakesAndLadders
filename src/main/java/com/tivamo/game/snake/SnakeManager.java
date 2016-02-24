@@ -13,7 +13,7 @@ public class SnakeManager {
 		List<Snake> snakeList = new ArrayList<Snake>();
 		int head, tail;
 		while (snakeList.size() < maxSnakes) {
-			head = RandomNumber.getRandomNumberInRange(GameProperties.MAX_POSITIONS_IN_BOARD - 1, 12);
+			head = RandomNumber.getRandomNumberInRange(GameProperties.NUM_POSITIONS_IN_BOARD - 1, 12);
 			tail = RandomNumber.getRandomNumberInRange(head - 10, 2);
 			Snake newSnake = new Snake(head, tail);
 			if (SnakeUtilities.isValidSnake(newSnake, snakeList)) {
